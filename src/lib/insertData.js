@@ -142,7 +142,9 @@ try {
 	console.log('Products inserted successfully');
 
 	// Insert product tags
-	const insertProductTag = db.prepare('INSERT OR IGNORE INTO product_tags (product_id, tag_id) VALUES (?, ?)');
+	const insertProductTag = db.prepare(
+		'INSERT OR IGNORE INTO product_tags (product_id, tag_id) VALUES (?, ?)'
+	);
 	const insertProductTags = db.transaction((products) => {
 		for (const product of products) {
 			// Ensure tags is an array
