@@ -48,5 +48,10 @@ db.exec(`
     PRIMARY KEY (product_id, tag_id),
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (tag_id) REFERENCES tags(id)
-  )
+  );
+
+  CREATE TABLE IF NOT EXISTS cache (
+    key TEXT PRIMARY KEY,
+    value JSONB
+  );
 `);
