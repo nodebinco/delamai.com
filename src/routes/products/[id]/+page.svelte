@@ -89,7 +89,7 @@
 <div class="container mx-auto px-4 py-8">
   <!-- Breadcrumb -->
   {#if data.categories.length > 0}
-    <div class="breadcrumbs mb-6 text-sm">
+    <div class="breadcrumbs mb-4 text-sm">
       <ul>
         <li>
           <a href="/" class="link link-hover text-primary">หน้าหลัก</a>
@@ -174,27 +174,6 @@
         </div>
       {/if}
 
-      <!-- Description -->
-      <div class="prose mb-4 max-w-none">
-        <h3 class="text-lg font-semibold">รายละเอียดสินค้า</h3>
-        <div class="relative">
-          <div class={showFullDescription ? '' : 'max-h-64 overflow-hidden'}>
-            <p class="whitespace-pre-wrap">{@html data.product.description}</p>
-          </div>
-          {#if !showFullDescription}
-            <div
-              class="absolute right-0 bottom-0 left-0 h-16 bg-gradient-to-t from-white to-transparent"
-            ></div>
-          {/if}
-        </div>
-        <button
-          class="btn btn-ghost btn-sm mt-2 h-10 w-full"
-          on:click={() => (showFullDescription = !showFullDescription)}
-        >
-          {showFullDescription ? 'แสดงน้อยลง' : 'แสดงเพิ่มเติม'}
-        </button>
-      </div>
-
       <!-- Brand -->
       {#if data.product.brand_name && data.product.brand_name !== 'NoBrand'}
         <div class="flex items-center gap-2">
@@ -235,6 +214,77 @@
           <span class="text-lg">ซื้อที่ Shopee</span>
         </a>
       </div>
+    </div>
+  </div>
+
+  <!-- Description (Full Width for iPad and up) -->
+  <div class="mb-12 md:col-span-2">
+    <div class="prose prose-lg max-w-none">
+      <h3 class="text-lg font-semibold">รายละเอียดสินค้า</h3>
+      <div class="relative">
+        <div class={showFullDescription ? 'description-content' : 'description-content max-h-64 overflow-hidden'}>
+          <div class="
+            [&_*]:!text-inherit 
+            [&_*]:!font-inherit 
+            [&_img]:!my-0 
+            [&_p]:!my-2 
+            [&_ul]:!list-disc 
+            [&_ol]:!list-decimal 
+            [&_ul]:!pl-5 
+            [&_ol]:!pl-5 
+            [&_li]:!ml-4
+            [&_h1]:!text-3xl
+            [&_h2]:!text-2xl
+            [&_h3]:!text-xl
+            [&_h4]:!text-lg
+            [&_h1]:!font-bold
+            [&_h2]:!font-bold
+            [&_h3]:!font-bold
+            [&_h4]:!font-bold
+            [&_h1]:!my-4
+            [&_h2]:!my-3
+            [&_h3]:!my-2
+            [&_h4]:!my-2
+            [&_strong]:!font-bold
+            [&_b]:!font-bold
+            [&_i]:!italic
+            [&_u]:!underline
+            [&_.ml-1]:!ml-1
+            [&_.ml-2]:!ml-2
+            [&_.ml-3]:!ml-3
+            [&_.ml-4]:!ml-4
+            [&_.ml-5]:!ml-5
+            [&_.mr-1]:!mr-1
+            [&_.mr-2]:!mr-2
+            [&_.mr-3]:!mr-3
+            [&_.mr-4]:!mr-4
+            [&_.mr-5]:!mr-5
+            [&_.mt-1]:!mt-1
+            [&_.mt-2]:!mt-2
+            [&_.mt-3]:!mt-3
+            [&_.mt-4]:!mt-4
+            [&_.mt-5]:!mt-5
+            [&_.mb-1]:!mb-1
+            [&_.mb-2]:!mb-2
+            [&_.mb-3]:!mb-3
+            [&_.mb-4]:!mb-4
+            [&_.mb-5]:!mb-5
+          ">
+            {@html data.product.description}
+          </div>
+        </div>
+        {#if !showFullDescription}
+          <div
+            class="absolute right-0 bottom-0 left-0 h-16 bg-gradient-to-t from-white to-transparent"
+          ></div>
+        {/if}
+      </div>
+      <button
+        class="btn btn-ghost btn-sm mt-2 h-10 w-full"
+        on:click={() => (showFullDescription = !showFullDescription)}
+      >
+        {showFullDescription ? 'แสดงน้อยลง' : 'แสดงเพิ่มเติม'}
+      </button>
     </div>
   </div>
 

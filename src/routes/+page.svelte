@@ -25,11 +25,6 @@
                 class="w-full h-64 object-cover"
                 loading="lazy"
               />
-              <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity duration-300 flex items-center justify-center">
-                <span class="text-white opacity-0 hover:opacity-100 transition-opacity duration-300 font-semibold">
-                  ดูรายละเอียด
-                </span>
-              </div>
             </figure>
           </a>
         </div>
