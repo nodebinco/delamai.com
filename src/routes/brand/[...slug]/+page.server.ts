@@ -3,7 +3,7 @@ import type { Load } from './$types';
 import { db } from '$lib/db';
 import type { Brand, Product } from '$lib/db';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   const slugParts = params.slug.split('/');
@@ -14,9 +14,15 @@ export const load: Load = async ({ params }) => {
 
   const brandId = slugParts[0];
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
+
+  if (isNaN(page) || page < 1) {
+    throw error(400, 'Invalid page number');
+  }
+
   const offset = (page - 1) * ITEMS_PER_PAGE;
 
   const brand = db.prepare('SELECT * FROM brands WHERE id = ?').get(brandId) as Brand | undefined;
+
   if (!brand) {
     throw error(404, 'Brand not found');
   }
@@ -26,16 +32,19 @@ export const load: Load = async ({ params }) => {
       count: number;
     }
   ).count;
-
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+  if (page > totalPages && totalPages > 0) {
+    throw error(404, 'Page not found');
+  }
 
   const products = db
     .prepare(
       `
     SELECT *
-    FROM products p
-    WHERE p.global_brand = ? 
-    ORDER BY p.item_sold DESC 
+    FROM products
+    WHERE global_brand = ? 
+    ORDER BY item_sold DESC 
     LIMIT ? OFFSET ?
   `
     )
@@ -45,6 +54,8 @@ export const load: Load = async ({ params }) => {
     brand,
     products,
     totalPages,
-    currentPage: page
+    currentPage: page,
+    totalCount,
+    ITEMS_PER_PAGE
   };
 };

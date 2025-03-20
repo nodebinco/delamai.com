@@ -5,6 +5,9 @@
 
   export let data: PageData;
 
+  $: startItem = (data.currentPage - 1) * data.ITEMS_PER_PAGE + 1;
+  $: endItem = Math.min(data.currentPage * data.ITEMS_PER_PAGE, data.totalCount);
+
   // Format number with commas
   function formatNumber(num: number): string {
     return num.toLocaleString('th-TH');
@@ -17,9 +20,11 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-  <div class="mb-6 flex items-center gap-2">
+  <div class="mb-6 text-center">
     <h1 class="text-3xl font-bold">{data.tag.name}</h1>
-    <div class="badge badge-accent">{formatNumber(data.totalCount)} สินค้า</div>
+    <p class="mt-2 text-sm text-gray-600">
+      แสดง {formatNumber(startItem)}-{formatNumber(endItem)} จาก {formatNumber(data.totalCount)} รายการ
+    </p>
   </div>
 
   {#if data.products.length === 0}
@@ -34,12 +39,12 @@
           stroke-linejoin="round"
           stroke-width="2"
           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        ></path></svg
+        /></svg
       >
       <span>ไม่พบสินค้าที่มีแท็กนี้</span>
     </div>
   {:else}
-    <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {#each data.products as product}
         <ProductCard {product} />
       {/each}

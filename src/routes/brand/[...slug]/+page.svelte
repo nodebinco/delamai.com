@@ -5,6 +5,10 @@
 
   export let data: PageData;
 
+  $: startItem = (data.currentPage - 1) * data.ITEMS_PER_PAGE + 1;
+  $: endItem = Math.min(data.currentPage * data.ITEMS_PER_PAGE, data.totalCount);
+  $: totalCount = data.totalCount;
+
   function formatNumber(num: number): string {
     return num.toLocaleString('th-TH');
   }
@@ -26,10 +30,12 @@
   </div>
 
   <!-- Brand Header -->
-  <div class="mb-8 flex items-center gap-4">
+  <div class="mb-8 text-center">
     <div>
       <h1 class="text-3xl font-bold">{data.brand.name}</h1>
-      {data.currentPage}
+      <p class="mt-2 text-sm text-gray-600">
+        แสดง {formatNumber(startItem)}-{formatNumber(endItem)} จาก {formatNumber(totalCount)} รายการ
+      </p>
     </div>
   </div>
 

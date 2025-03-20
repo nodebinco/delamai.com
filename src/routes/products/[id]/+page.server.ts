@@ -3,7 +3,7 @@ import type { Load } from './$types';
 import type { Product, Tag } from '$lib/db';
 import { db } from '$lib/db';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   const productId = params.id;
@@ -52,7 +52,9 @@ export const load: Load = async ({ params }) => {
     )
     .all(productId) as Tag[];
 
-  const relatedProducts = db
+  let relatedProducts: Product[] = [];
+  let categoryProducts: Product[] = [];
+  relatedProducts = db
     .prepare(
       `
     WITH SameBrandProducts AS (
@@ -98,6 +100,42 @@ export const load: Load = async ({ params }) => {
       product.global_brand,
       ITEMS_PER_PAGE
     ) as Product[];
+
+  if (relatedProducts.length < ITEMS_PER_PAGE) {
+    categoryProducts = db
+      .prepare(
+        `
+        SELECT DISTINCT
+          p.*,
+          b.id as brand_id,
+          b.name as brand_name
+        FROM products p
+        LEFT JOIN brands b ON p.global_brand = b.name
+        WHERE p.id != ?
+          AND p.id NOT IN (${relatedProducts.map((p) => p.id).join(',') || '0'})
+          AND (p.global_catid3 = ? OR p.global_catid2 = ?)
+        ORDER BY 
+          CASE 
+            WHEN p.global_catid3 = ? THEN 2
+            WHEN p.global_catid2 = ? THEN 1
+          END DESC,
+          item_sold DESC
+        LIMIT ?
+      `
+      )
+      .all(
+        productId,
+        product.global_catid3,
+        product.global_catid2,
+        product.global_catid3,
+        product.global_catid2,
+        ITEMS_PER_PAGE - relatedProducts.length
+      ) as Product[];
+  }
+
+  relatedProducts = Array.from(
+    new Map([...relatedProducts, ...categoryProducts].map((item) => [item.id, item])).values()
+  ).slice(0, ITEMS_PER_PAGE);
 
   const categories = [
     product.category1_th && product.global_catid1

@@ -1,10 +1,10 @@
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './[page]/$types';
+import type { Load } from './$types';
 import { db, type Category, type Product } from '$lib/db';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 120;
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: Load = async ({ params }) => {
   const slugParts = params.slug.split('/');
 
   if (slugParts.length > 2) {
@@ -56,6 +56,7 @@ export const load: PageServerLoad = async ({ params }) => {
     products,
     totalPages,
     totalCount,
-    currentPage: page
+    currentPage: page,
+    ITEMS_PER_PAGE
   };
 };

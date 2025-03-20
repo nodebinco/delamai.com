@@ -3,7 +3,7 @@ import type { Load } from './$types';
 import type { Product, Tag } from '$lib/db';
 import { db } from '$lib/db';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   console.log(params);
@@ -58,6 +58,7 @@ export const load: Load = async ({ params }) => {
     products,
     totalPages,
     totalCount,
-    currentPage: page
+    currentPage: page,
+    ITEMS_PER_PAGE
   };
 };
