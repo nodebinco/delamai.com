@@ -1,15 +1,11 @@
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { Load } from './$types';
 import type { Product, Tag } from '$lib/db';
 import { db, getCache, setCache } from '$lib/db';
 
 const ITEMS_PER_PAGE = 120;
 
-interface Params {
-  slug: string;
-}
-
-export const load: PageServerLoad = async ({ params }) => {
+export const load: Load = async ({ params }) => {
   console.log(params);
   const slugParts = params.slug.split('/');
 
