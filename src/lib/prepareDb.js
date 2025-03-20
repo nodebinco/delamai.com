@@ -52,6 +52,7 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS cache (
     key TEXT PRIMARY KEY,
-    value JSONB
+    value JSONB,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 `);

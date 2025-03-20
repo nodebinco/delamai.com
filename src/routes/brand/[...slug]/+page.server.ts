@@ -1,11 +1,11 @@
 import { error } from '@sveltejs/kit';
-import type { Load } from './$types';
-import { db } from '$lib/db';
+import type { PageServerLoad } from './$types';
+import { db, getCache, setCache } from '$lib/db';
 import type { Brand, Product } from '$lib/db';
 
 const ITEMS_PER_PAGE = 120;
 
-export const load: Load = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
   const slugParts = params.slug.split('/');
 
   if (slugParts.length > 2) {
@@ -17,6 +17,14 @@ export const load: Load = async ({ params }) => {
 
   if (isNaN(page) || page < 1) {
     throw error(400, 'Invalid page number');
+  }
+
+  // Check cache first
+  const cacheKey = `brand_${brandId}_${page}`;
+  const cachedData = getCache(cacheKey);
+  
+  if (cachedData) {
+    return cachedData;
   }
 
   const offset = (page - 1) * ITEMS_PER_PAGE;
@@ -50,7 +58,7 @@ export const load: Load = async ({ params }) => {
     )
     .all(brand.name, ITEMS_PER_PAGE, offset) as Product[];
 
-  return {
+  const data = {
     brand,
     products,
     totalPages,
@@ -58,4 +66,9 @@ export const load: Load = async ({ params }) => {
     totalCount,
     ITEMS_PER_PAGE
   };
+
+  // Cache the results
+  setCache(cacheKey, data);
+
+  return data;
 };

@@ -1,12 +1,20 @@
 import { error } from '@sveltejs/kit';
 import type { Load } from './$types';
 import type { Product, Tag } from '$lib/db';
-import { db } from '$lib/db';
+import { db, getCache, setCache } from '$lib/db';
 
 const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   const productId = params.id;
+  
+  // Check cache first
+  const cacheKey = `product_${productId}`;
+  const cachedData = getCache(cacheKey);
+  
+  if (cachedData) {
+    return cachedData;
+  }
 
   // Get product details with brand and category info
   const product = db
@@ -149,10 +157,15 @@ export const load: Load = async ({ params }) => {
       : null
   ].filter((cat): cat is { id: number; name_th: string } => cat !== null);
 
-  return {
+  const data = {
     product,
     tags,
     relatedProducts,
     categories
   };
+
+  // Cache the results
+  setCache(cacheKey, data);
+
+  return data;
 };

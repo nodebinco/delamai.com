@@ -1,10 +1,10 @@
 import { error } from '@sveltejs/kit';
-import type { Load } from './$types';
-import { db, type Category, type Product } from '$lib/db';
+import type { PageServerLoad } from './$types';
+import { db, getCache, setCache, type Category, type Product } from '$lib/db';
 
 const ITEMS_PER_PAGE = 120;
 
-export const load: Load = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
   const slugParts = params.slug.split('/');
 
   if (slugParts.length > 2) {
@@ -14,6 +14,14 @@ export const load: Load = async ({ params }) => {
   const categoryId = slugParts[0];
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
   const offset = (page - 1) * ITEMS_PER_PAGE;
+
+  // Check cache first
+  const cacheKey = `category_${categoryId}_${page}`;
+  const cachedData = getCache(cacheKey);
+  
+  if (cachedData) {
+    return cachedData;
+  }
 
   const category = db.prepare('SELECT * FROM categories WHERE id = ?').get(categoryId) as
     | Category
@@ -50,7 +58,7 @@ export const load: Load = async ({ params }) => {
     )
     .all(categoryId, categoryId, categoryId, ITEMS_PER_PAGE, offset) as Product[];
 
-  return {
+  const data = {
     categoryId,
     category,
     products,
@@ -59,4 +67,9 @@ export const load: Load = async ({ params }) => {
     currentPage: page,
     ITEMS_PER_PAGE
   };
+
+  // Cache the results
+  setCache(cacheKey, data);
+
+  return data;
 };

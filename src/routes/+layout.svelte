@@ -9,7 +9,6 @@
     <div class="flex h-16 items-center justify-between">
       <div class="flex items-center">
         <a href="/" class="flex items-center gap-2">
-          <img src="/logo.svg" alt="Delamai" class="h-8 w-8" />
           <span class="text-xl font-bold">เดอละมัย</span>
         </a>
       </div>

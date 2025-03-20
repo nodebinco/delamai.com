@@ -1,11 +1,15 @@
 import { error } from '@sveltejs/kit';
-import type { Load } from './$types';
+import type { PageServerLoad } from './$types';
 import type { Product, Tag } from '$lib/db';
-import { db } from '$lib/db';
+import { db, getCache, setCache } from '$lib/db';
 
 const ITEMS_PER_PAGE = 120;
 
-export const load: Load = async ({ params }) => {
+interface Params {
+  slug: string;
+}
+
+export const load: PageServerLoad = async ({ params }) => {
   console.log(params);
   const slugParts = params.slug.split('/');
 
@@ -16,6 +20,14 @@ export const load: Load = async ({ params }) => {
   const tagId = slugParts[0];
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
   const offset = (page - 1) * ITEMS_PER_PAGE;
+
+  // Check cache first
+  const cacheKey = `tag_${tagId}_${page}`;
+  const cachedData = getCache(cacheKey);
+  
+  if (cachedData) {
+    return cachedData;
+  }
 
   // Get tag details
   const tag = db.prepare('SELECT * FROM tags WHERE id = ?').get(tagId) as Tag;
@@ -53,7 +65,7 @@ export const load: Load = async ({ params }) => {
     )
     .all(tagId, ITEMS_PER_PAGE, offset) as Product[];
 
-  return {
+  const data = {
     tag,
     products,
     totalPages,
@@ -61,4 +73,9 @@ export const load: Load = async ({ params }) => {
     currentPage: page,
     ITEMS_PER_PAGE
   };
+
+  // Cache the results
+  setCache(cacheKey, data);
+
+  return data;
 };

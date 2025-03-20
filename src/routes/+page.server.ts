@@ -1,10 +1,18 @@
-import type { Load } from './$types';
+import type { Load, PageData } from './$types';
 import type { Product, Category } from '$lib/db';
-import { db } from '$lib/db';
+import { db, getCache, setCache } from '$lib/db';
 
 const ITEMS_PER_PAGE = 32;
 
 export const load: Load = async () => {
+  // Check cache first
+  const cacheKey = 'home';
+  const cachedData = getCache(cacheKey);
+  
+  if (cachedData) {
+    return cachedData as PageData;
+  }
+
   const featuredProducts = db
     .prepare(
       `
@@ -15,10 +23,8 @@ export const load: Load = async () => {
     )
     .all(ITEMS_PER_PAGE) as Product[];
 
-  // Get hero products (top 4 products)
   const heroProducts = featuredProducts.slice(0, 4);
 
-  // Get categories for showcase
   const categories = db
     .prepare(
       `
@@ -32,9 +38,14 @@ export const load: Load = async () => {
     )
     .all() as Category[];
 
-  return {
+  const data = {
     featuredProducts,
     heroProducts,
     categories
   };
+
+  // Cache the results
+  setCache(cacheKey, data);
+
+  return data;
 };
