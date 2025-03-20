@@ -306,9 +306,3 @@
     </div>
   </div>
 {/if}
-
-<style>
-  :global(body) {
-    padding-bottom: 4rem;
-  }
-</style>
