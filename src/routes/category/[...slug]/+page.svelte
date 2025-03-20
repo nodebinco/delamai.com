@@ -15,10 +15,14 @@
   }
 </script>
 
+<svelte:head>
+  <title>{data.category.name_th} - เดอละมัย (delamai)</title>
+  <meta name="description" content="สินค้าจากหมวดหมู่ {data.category.name_th} จากเดอละมัย" />
+</svelte:head>
+
 <div class="container mx-auto px-4 py-8">
   <div class="mb-8 text-center">
-    <h1 class="text-3xl font-bold">{data.category.name_en}</h1>
-    <p class="text-xl text-gray-600">{data.category.name_th}</p>
+    <h1 class="text-3xl font-bold">{data.category.name_th}</h1>
     <p class="mt-2 text-sm text-gray-600">
       แสดง {formatNumber(startItem)}-{formatNumber(endItem)} จาก {formatNumber(totalCount)} รายการ
     </p>

@@ -8,6 +8,42 @@
   let showFullDescription = false;
   let showStickyBar = false;
 
+  const jsonLd = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    name: data.product.title,
+    description: data.product.short_description || data.product.description,
+    image: data.product.image_link,
+    offers: {
+      '@type': 'Offer',
+      price: data.product.sale_price,
+      priceCurrency: 'THB',
+      availability: 'https://schema.org/InStock',
+      url: data.product.product_link,
+      seller: {
+        '@type': 'Organization',
+        name: 'Delamai',
+        url: 'https://delamai.com'
+      }
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: data.product.item_rating,
+      reviewCount: data.product.item_sold,
+      bestRating: '5',
+      worstRating: '1'
+    },
+    brand: {
+      '@type': 'Brand',
+      name: data.product.brand_name || 'NoBrand'
+    },
+    sku: data.product.id,
+    mpn: data.product.id,
+    url: `https://delamai.com/products/${data.product.id}`
+  };
+
+  const jsonLdScript = `<script type="application/ld+json">${JSON.stringify(jsonLd) + '<'}/script>`;
+
   function formatNumber(num: number): string {
     return num.toLocaleString('th-TH');
   }
@@ -25,6 +61,30 @@
     return () => window.removeEventListener('scroll', handleScroll);
   });
 </script>
+
+<svelte:head>
+  <title>{data.product.title} - เดอละมัย (delamai)</title>
+  <meta
+    name="description"
+    content={data.product.short_description || data.product.description.slice(0, 160)}
+  />
+  {#if data.tags && data.tags.length > 0}
+    <meta name="keywords" content={data.tags.map((tag) => tag.name).join(', ')} />
+  {/if}
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={data.product.title} />
+  <meta
+    property="og:description"
+    content={data.product.short_description || data.product.description.slice(0, 160)}
+  />
+  <meta property="og:image" content={data.product.image_link} />
+  <meta property="og:url" content={`https://delamai.com/products/${data.product.id}`} />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="เดอละมัย (delamai)" />
+
+  {@html jsonLdScript}
+</svelte:head>
 
 <div class="container mx-auto px-4 py-8">
   <!-- Breadcrumb -->
@@ -248,7 +308,6 @@
 {/if}
 
 <style>
-  /* Add padding to bottom of page to account for sticky bar */
   :global(body) {
     padding-bottom: 4rem;
   }
