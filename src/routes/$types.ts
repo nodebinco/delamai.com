@@ -5,10 +5,10 @@ export interface CategoryWithCount extends Category {
   product_count: number;
 }
 
-export interface PageData {
+export interface HomePageData {
   featuredProducts: Product[];
   heroProducts: Product[];
   categories: CategoryWithCount[];
 }
 
-export type Load = ServerLoad<Record<string, never>, PageData>; 
+export type Load = ServerLoad<Record<string, never>, HomePageData>;

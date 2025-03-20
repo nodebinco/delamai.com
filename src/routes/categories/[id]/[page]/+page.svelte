@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import ProductCard from '$lib/components/ProductCard.svelte';
-  
+
   export let data: PageData;
   const { category, products, totalPages, currentPage } = data;
 
@@ -17,18 +17,29 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-  <div class="flex items-center gap-2 mb-6">
+  <div class="mb-6 flex items-center gap-2">
     <h1 class="text-3xl font-bold">{category.name_th}</h1>
     <div class="badge badge-secondary">{formatNumber(category.product_count)} สินค้า</div>
   </div>
 
   {#if products.length === 0}
     <div class="alert alert-info">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        class="h-6 w-6 shrink-0 stroke-current"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path></svg
+      >
       <span>ไม่พบสินค้าในหมวดหมู่นี้</span>
     </div>
   {:else}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+    <div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {#each products as product}
         <ProductCard {product} />
       {/each}
@@ -38,33 +49,23 @@
       <div class="flex justify-center">
         <div class="join">
           {#if currentPage > 1}
-            <a 
-              href="/categories/{category.id}/{currentPage - 1}" 
-              class="join-item btn"
-            >
-              «
-            </a>
+            <a href="/categories/{category.id}/{currentPage - 1}" class="join-item btn"> « </a>
           {/if}
-          
+
           {#each Array(totalPages) as _, i}
-            <a 
-              href="/categories/{category.id}/{i + 1}" 
+            <a
+              href="/categories/{category.id}/{i + 1}"
               class="join-item btn {currentPage === i + 1 ? 'btn-active' : ''}"
             >
               {i + 1}
             </a>
           {/each}
-          
+
           {#if currentPage < totalPages}
-            <a 
-              href="/categories/{category.id}/{currentPage + 1}" 
-              class="join-item btn"
-            >
-              »
-            </a>
+            <a href="/categories/{category.id}/{currentPage + 1}" class="join-item btn"> » </a>
           {/if}
         </div>
       </div>
     {/if}
   {/if}
-</div> 
+</div>
