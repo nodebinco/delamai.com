@@ -6,6 +6,7 @@
 <div class="card bg-base-100 shadow-sm transition-all duration-300 hover:shadow-md">
   <a href="/products/{product.id}" class="block">
     <figure class="overflow-hidden rounded-t-lg">
+      <div class="aspect-square w-full animate-pulse bg-gray-200"></div>
       <img
         src={product.image_link}
         alt={product.title}

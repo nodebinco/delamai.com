@@ -1,5 +1,6 @@
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
+import { writeFile } from 'fs/promises';
 
 // An array with your links
 const links = [
@@ -9,4 +10,7 @@ const links = [
 
 const stream = new SitemapStream({ hostname: 'https://delamai.com' });
 
-await streamToPromise(Readable.from(links).pipe(stream)).then((data) => data.toString());
+const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
+  data.toString()
+);
+await writeFile('build/client/sitemap.xml', sitemap);

@@ -2,7 +2,7 @@
   import '../app.css';
   let { children } = $props();
 
-  let searchQuery = '';
+  let searchQuery = $state('');
 
   const categories = [
     { id: '100636', name: 'บ้านและที่อยู่อาศัย' },
@@ -54,7 +54,7 @@
           <span class="text-xl font-bold text-white">เดอละมัย</span>
         </a>
         <!-- Search Bar -->
-        <form on:submit={handleSearch} class="relative flex-1">
+        <form onsubmit={handleSearch} class="relative flex-1">
           <input
             type="text"
             bind:value={searchQuery}
@@ -63,6 +63,7 @@
           />
           <button
             type="submit"
+            aria-label="ค้นหา"
             class="hover:text-primary absolute top-1/2 right-2 -translate-y-1/2 text-gray-500"
           >
             <svg
