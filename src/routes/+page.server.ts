@@ -1,5 +1,5 @@
 import type { Load, PageData } from './$types';
-import type { Product, Category } from '$lib/db';
+import type {} from '$lib/db';
 import { db, getCache, setCache } from '$lib/db';
 
 const ITEMS_PER_PAGE = 32;

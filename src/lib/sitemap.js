@@ -20,7 +20,7 @@ async function generateSitemapLinks() {
   // Add brand URLs
   const brands = db.prepare('SELECT id FROM brands').all();
   for (const brand of brands) {
-    if(brand.id == '') continue;
+    if (brand.id == '') continue;
     links.push({
       url: `/brand/${brand.id}`,
       changefreq: 'weekly',
@@ -31,7 +31,7 @@ async function generateSitemapLinks() {
   // Add category URLs
   const categories = db.prepare('SELECT id FROM categories').all();
   for (const category of categories) {
-    if(category.id == '') continue;
+    if (category.id == '') continue;
     links.push({
       url: `/category/${category.id}`,
       changefreq: 'weekly',
@@ -42,7 +42,7 @@ async function generateSitemapLinks() {
   // Add tag URLs
   const tags = db.prepare('SELECT id FROM tags').all();
   for (const tag of tags) {
-    if(tag.id == '') continue;
+    if (tag.id == '') continue;
     links.push({
       url: `/tags/${tag.id}`,
       changefreq: 'weekly',

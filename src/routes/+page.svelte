@@ -15,8 +15,8 @@
 
 <div class="container mx-auto px-4 py-8">
   <!-- Hero Section -->
-  <section class="relative py-20">
-    <div class="container mx-auto px-4">
+  <section class="relative mb-8">
+    <div class="container mx-auto">
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div class="flex flex-col justify-center">
           <h1 class="text-4xl font-bold tracking-tight sm:text-6xl">เดอละมัย</h1>
@@ -26,7 +26,7 @@
           </p>
         </div>
 
-        <div class="rounded-xl bg-orange-100 p-6">
+        <div class="rounded-xl bg-gray-100 p-6">
           <div class="grid grid-cols-2 gap-4">
             <div class="grid gap-4">
               {#each data.heroProducts.slice(0, 2) as product}
@@ -67,7 +67,7 @@
   <!-- Featured Products Section -->
   <section class="mb-12">
     <h2 class="mb-6 text-2xl font-bold">สินค้าขายดี</h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
       {#each data.featuredProducts as product}
         <ProductCard {product} />
       {/each}
