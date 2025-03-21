@@ -8,7 +8,7 @@ export const load: Load = async () => {
   // Check cache first
   const cacheKey = 'home';
   const cachedData = getCache(cacheKey);
-  
+
   if (cachedData) {
     return cachedData as PageData;
   }

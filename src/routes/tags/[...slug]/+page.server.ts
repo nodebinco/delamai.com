@@ -20,7 +20,7 @@ export const load: Load = async ({ params }) => {
   // Check cache first
   const cacheKey = `tag_${tagId}_${page}`;
   const cachedData = getCache(cacheKey);
-  
+
   if (cachedData) {
     return cachedData;
   }

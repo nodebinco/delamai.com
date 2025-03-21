@@ -18,7 +18,7 @@ export const load: Load = async ({ params }) => {
   // Check cache first
   const cacheKey = `category_${categoryId}_${page}`;
   const cachedData = getCache(cacheKey);
-  
+
   if (cachedData) {
     return cachedData;
   }

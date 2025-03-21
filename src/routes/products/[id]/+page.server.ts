@@ -7,11 +7,11 @@ const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   const productId = params.id;
-  
+
   // Check cache first
   const cacheKey = `product_${productId}`;
   const cachedData = getCache(cacheKey);
-  
+
   if (cachedData) {
     return cachedData;
   }

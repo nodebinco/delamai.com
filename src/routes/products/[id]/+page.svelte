@@ -156,15 +156,19 @@
 
       <!-- Buy Button -->
       <div>
-        <a
-          href={data.product.product_link}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
           class="btn h-12 w-full gap-2 rounded-lg border-0 bg-[#ee4d2d] text-white hover:bg-[#d73211]"
+          on:click={() => {
+            window.open(
+              `${data.product.product_link}?uls_trackid=526tokeq018r&utm_campaign=id_7Qvn7oXhvC&utm_content=delamai----&utm_medium=affiliates&utm_source=an_15375710115&utm_term=cp74y3rr4b1h`,
+              '_blank',
+              'noopener,noreferrer'
+            );
+          }}
         >
           <img src="/shopee.svg" alt="Shopee" class="h-5 w-5" />
           <span class="text-lg">ซื้อที่ Shopee</span>
-        </a>
+        </button>
       </div>
 
       <!-- Short Description -->
@@ -204,15 +208,19 @@
 
       <!-- Buy Button -->
       <div class="pt-2">
-        <a
-          href={data.product.product_link}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
           class="btn h-12 w-full gap-2 rounded-lg border-0 bg-[#ee4d2d] text-white hover:bg-[#d73211]"
+          on:click={() => {
+            window.open(
+              `${data.product.product_link}?uls_trackid=526tokeq018r&utm_campaign=id_7Qvn7oXhvC&utm_content=delamai----&utm_medium=affiliates&utm_source=an_15375710115&utm_term=cp74y3rr4b1h`,
+              '_blank',
+              'noopener,noreferrer'
+            );
+          }}
         >
           <img src="/shopee.svg" alt="Shopee" class="h-5 w-5" />
           <span class="text-lg">ซื้อที่ Shopee</span>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -222,33 +230,20 @@
     <div class="prose prose-lg max-w-none">
       <h3 class="text-lg font-semibold">รายละเอียดสินค้า</h3>
       <div class="relative">
-        <div class={showFullDescription ? 'description-content' : 'description-content max-h-64 overflow-hidden'}>
-          <div class="
-            [&_*]:!text-inherit 
-            [&_*]:!font-inherit 
-            [&_img]:!my-0 
-            [&_p]:!my-2 
-            [&_ul]:!list-disc 
-            [&_ol]:!list-decimal 
-            [&_ul]:!pl-5 
-            [&_ol]:!pl-5 
-            [&_li]:!ml-4
-            [&_h1]:!text-3xl
-            [&_h2]:!text-2xl
-            [&_h3]:!text-xl
-            [&_h4]:!text-lg
-            [&_h1]:!font-bold
-            [&_h2]:!font-bold
-            [&_h3]:!font-bold
-            [&_h4]:!font-bold
-            [&_h1]:!my-4
-            [&_h2]:!my-3
-            [&_h3]:!my-2
-            [&_h4]:!my-2
-            [&_strong]:!font-bold
-            [&_b]:!font-bold
-            [&_i]:!italic
-            [&_u]:!underline
+        <div
+          class={showFullDescription
+            ? 'description-content'
+            : 'description-content max-h-64 overflow-hidden'}
+        >
+          <div
+            class="
+            [&_*]:!font-inherit
+            [&_*]:!text-inherit
+            [&_.mb-1]:!mb-1
+            [&_.mb-2]:!mb-2
+            [&_.mb-3]:!mb-3
+            [&_.mb-4]:!mb-4
+            [&_.mb-5]:!mb-5
             [&_.ml-1]:!ml-1
             [&_.ml-2]:!ml-2
             [&_.ml-3]:!ml-3
@@ -264,12 +259,31 @@
             [&_.mt-3]:!mt-3
             [&_.mt-4]:!mt-4
             [&_.mt-5]:!mt-5
-            [&_.mb-1]:!mb-1
-            [&_.mb-2]:!mb-2
-            [&_.mb-3]:!mb-3
-            [&_.mb-4]:!mb-4
-            [&_.mb-5]:!mb-5
-          ">
+            [&_b]:!font-bold
+            [&_h1]:!my-4
+            [&_h1]:!text-3xl
+            [&_h1]:!font-bold
+            [&_h2]:!my-3
+            [&_h2]:!text-2xl
+            [&_h2]:!font-bold
+            [&_h3]:!my-2
+            [&_h3]:!text-xl
+            [&_h3]:!font-bold
+            [&_h4]:!my-2
+            [&_h4]:!text-lg
+            [&_h4]:!font-bold
+            [&_i]:!italic
+            [&_img]:!my-0
+            [&_li]:!ml-4
+            [&_ol]:!list-decimal
+            [&_ol]:!pl-5
+            [&_p]:!my-2
+            [&_strong]:!font-bold
+            [&_u]:!underline
+            [&_ul]:!list-disc
+            [&_ul]:!pl-5
+          "
+          >
             {@html data.product.description}
           </div>
         </div>
@@ -344,15 +358,19 @@
           </div>
         </div>
       </div>
-      <a
-        href={data.product.product_link}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
         class="btn min-w-[80px] gap-2 border-0 bg-[#ee4d2d] text-white hover:bg-[#d73211]"
+        on:click={() => {
+          window.open(
+            `${data.product.product_link}?uls_trackid=526tokeq018r&utm_campaign=id_7Qvn7oXhvC&utm_content=delamai----&utm_medium=affiliates&utm_source=an_15375710115&utm_term=cp74y3rr4b1h`,
+            '_blank',
+            'noopener,noreferrer'
+          );
+        }}
       >
         <img src="/shopee.svg" alt="Shopee" class="hidden h-5 w-5 sm:block" />
         <span class="text-sm sm:text-base">ซื้อที่ Shopee</span>
-      </a>
+      </button>
     </div>
   </div>
 {/if}

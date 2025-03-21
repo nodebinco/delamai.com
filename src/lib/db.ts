@@ -106,9 +106,9 @@ export function getTagWithProductCount(tagId: string): Tag & { product_count: nu
 
 // Cache helper functions
 export function getCache(key: string): any | null {
-  const result = db
-    .prepare('SELECT value, created_at FROM cache WHERE key = ?')
-    .get(key) as { value: string; created_at: string } | undefined;
+  const result = db.prepare('SELECT value, created_at FROM cache WHERE key = ?').get(key) as
+    | { value: string; created_at: string }
+    | undefined;
 
   if (!result) {
     return null;

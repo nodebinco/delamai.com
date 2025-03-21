@@ -1,19 +1,6 @@
 <script lang="ts">
   import type { Product } from '$lib/db';
   export let product: Product;
-
-  // Trim brand name if too long
-  function trimBrand(brand: string): string {
-    if (brand.length > 20) {
-      return brand.substring(0, 20) + '...';
-    }
-    return brand;
-  }
-
-  // Stop event propagation for Shopee button
-  function handleShopeeClick(event: MouseEvent) {
-    event.stopPropagation();
-  }
 </script>
 
 <div class="card bg-base-100 shadow-sm transition-all duration-300 hover:shadow-md">
@@ -39,14 +26,18 @@
     </div>
   </a>
   <div class="justify-start px-2 pb-2">
-    <a
-      href={product.product_link}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="btn w-full gap-2 rounded-lg border-0 bg-[#ee4d2d] text-white hover:bg-[#d73211]"
-      on:click={handleShopeeClick}
+    <button
+      class="btn h-12 w-full gap-2 rounded-lg border-0 bg-[#ee4d2d] text-white hover:bg-[#d73211]"
+      on:click={(e) => {
+        e.stopPropagation();
+        window.open(
+          `${product.product_link}?uls_trackid=526tokeq018r&utm_campaign=id_7Qvn7oXhvC&utm_content=delamai----&utm_medium=affiliates&utm_source=an_15375710115&utm_term=cp74y3rr4b1h`,
+          '_blank',
+          'noopener,noreferrer'
+        );
+      }}
     >
       ซื้อที่ Shopee
-    </a>
+    </button>
   </div>
 </div>
