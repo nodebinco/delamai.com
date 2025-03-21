@@ -1,6 +1,9 @@
 import Database from 'better-sqlite3';
+import { DATABASE_URL } from '$env/static/private';
 
-export const db = new Database('src/lib/data.db');
+console.log(DATABASE_URL);
+
+export const db = new Database(DATABASE_URL);
 
 // Enable foreign keys
 db.pragma('foreign_keys = ON');

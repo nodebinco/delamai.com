@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>เงื่อนไขการใช้บริการ - เดอละมัย (delamai)</title>
+  <meta name="description" content="เงื่อนไขการใช้บริการ - เดอละมัย (delamai)" />
+</svelte:head>
+
 <div class="container mx-auto px-4 py-8">
   <h1 class="mb-6 text-3xl font-bold">เงื่อนไขการใช้บริการ</h1>
 

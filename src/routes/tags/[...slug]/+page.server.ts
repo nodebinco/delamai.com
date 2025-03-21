@@ -6,7 +6,6 @@ import { db, getCache, setCache } from '$lib/db';
 const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
-  console.log(params);
   const slugParts = params.slug.split('/');
 
   if (slugParts.length > 2) {
@@ -17,7 +16,6 @@ export const load: Load = async ({ params }) => {
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
   const offset = (page - 1) * ITEMS_PER_PAGE;
 
-  // Check cache first
   const cacheKey = `tag_${tagId}_${page}`;
   const cachedData = getCache(cacheKey);
 
@@ -25,14 +23,11 @@ export const load: Load = async ({ params }) => {
     return cachedData;
   }
 
-  // Get tag details
   const tag = db.prepare('SELECT * FROM tags WHERE id = ?').get(tagId) as Tag;
   if (!tag) {
     throw error(404, 'Tag not found');
   }
-  console.log(tag);
 
-  // Get total products count
   const totalCount = (
     db
       .prepare(
@@ -70,7 +65,6 @@ export const load: Load = async ({ params }) => {
     ITEMS_PER_PAGE
   };
 
-  // Cache the results
   setCache(cacheKey, data);
 
   return data;

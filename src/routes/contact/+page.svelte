@@ -1,3 +1,12 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+</script>
+
+<svelte:head>
+  <title>ติดต่อเดอละมัย (delamai)</title>
+  <meta name="description" content="ติดต่อเดอละมัย - เราพร้อมให้บริการและตอบคำถามของคุณ" />
+</svelte:head>
+
 <div class="container mx-auto px-4 py-8">
   <h1 class="mb-6 text-3xl font-bold">ติดต่อเรา</h1>
 

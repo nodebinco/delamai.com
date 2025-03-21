@@ -1,3 +1,15 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+</script>
+
+<svelte:head>
+  <title>เกี่ยวกับเดอละมัย (delamai)</title>
+  <meta
+    name="description"
+    content="เดอละมัย - แพลตฟอร์มอีคอมเมิร์ซที่มุ่งมั่นนำเสนอสินค้าคุณภาพสูงจากทุกหมวดหมู่ให้กับลูกค้าชาวไทย"
+  />
+</svelte:head>
+
 <div class="container mx-auto px-4 py-8">
   <h1 class="mb-6 text-3xl font-bold">เกี่ยวกับ delamai (เดอละมัย)</h1>
   <div class="prose max-w-none">

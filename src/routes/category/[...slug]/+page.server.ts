@@ -15,7 +15,6 @@ export const load: Load = async ({ params }) => {
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
   const offset = (page - 1) * ITEMS_PER_PAGE;
 
-  // Check cache first
   const cacheKey = `category_${categoryId}_${page}`;
   const cachedData = getCache(cacheKey);
 
@@ -29,8 +28,6 @@ export const load: Load = async ({ params }) => {
   if (!category) {
     throw error(404, 'Category not found');
   }
-
-  console.log(category);
 
   const totalCount = (
     db
@@ -46,7 +43,6 @@ export const load: Load = async ({ params }) => {
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-  // Get products for current page
   const products = db
     .prepare(
       `
@@ -68,7 +64,6 @@ export const load: Load = async ({ params }) => {
     ITEMS_PER_PAGE
   };
 
-  // Cache the results
   setCache(cacheKey, data);
 
   return data;

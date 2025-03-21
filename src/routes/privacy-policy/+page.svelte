@@ -1,3 +1,15 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+</script>
+
+<svelte:head>
+  <title>นโยบายความเป็นส่วนตัว - เดอละมัย (delamai)</title>
+  <meta
+    name="description"
+    content="นโยบายความเป็นส่วนตัวของเดอละมัย - เรียนรู้วิธีการที่เราจัดการและปกป้องข้อมูลส่วนบุคคลของคุณ"
+  />
+</svelte:head>
+
 <div class="container mx-auto px-4 py-8">
   <h1 class="mb-6 text-3xl font-bold">นโยบายความเป็นส่วนตัว</h1>
 

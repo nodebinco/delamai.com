@@ -40,7 +40,7 @@
   function handleSearch(e: Event) {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+      window.location.href = `/search/${encodeURIComponent(searchQuery.trim())}`;
     }
   }
 </script>
