@@ -86,7 +86,7 @@
   {@html jsonLdScript}
 </svelte:head>
 
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 pt-4 pb-8">
   <!-- Breadcrumb -->
   {#if data.categories.length > 0}
     <div class="breadcrumbs mb-4 text-sm">
