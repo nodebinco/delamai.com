@@ -23,7 +23,15 @@ export const load: Load = async () => {
     )
     .all(ITEMS_PER_PAGE) as Product[];
 
-  const heroProducts = featuredProducts.slice(0, 4);
+  const heroProducts = db
+    .prepare(
+      `
+    SELECT * FROM products 
+    ORDER BY RANDOM() DESC 
+    LIMIT ?
+  `
+    )
+    .all(4) as Product[];
 
   const categories = db
     .prepare(

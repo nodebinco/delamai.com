@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "vite build && cp src/lib/data.db build/data.db && cp .env.production build/.env && node src/lib/sitemap.js",
     "start": "node --env-file=.env build",
+    "deploy": "rsync -avz --progress --ignore-existing --info=progress2 ./build/* root@157.230.241.79:/usr/app",
     "preview": "vite preview",
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
