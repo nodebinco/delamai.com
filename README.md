@@ -683,7 +683,6 @@
   - [**อื่นๆ**](https://delamai.com/category/100061)
 - [**เครื่องประดับแฟชั่น**](https://delamai.com/category/100009)
   - [**แว่นตา**](https://delamai.com/category/100030)
-    - [****](https://delamai.com/category/100152)
     - [**แว่นกันแดด**](https://delamai.com/category/100151)
     - [**กล่องและอุปกรณ์สำหรับแว่นตา**](https://delamai.com/category/100153)
     - [**อื่นๆ**](https://delamai.com/category/100154)
