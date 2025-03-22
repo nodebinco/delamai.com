@@ -32,7 +32,7 @@ export const load: Load = async ({ params }) => {
     db
       .prepare(
         `
-    SELECT COUNT(*) as count 
+    SELECT COUNT(id) as count 
     FROM products p
     JOIN product_tags pt ON p.id = pt.product_id
     WHERE pt.tag_id = ?
@@ -46,7 +46,7 @@ export const load: Load = async ({ params }) => {
   const products = db
     .prepare(
       `
-    SELECT p.* 
+    SELECT id, title, image_link, item_rating, item_sold, sale_price, product_link
     FROM products p
     JOIN product_tags pt ON p.id = pt.product_id
     WHERE pt.tag_id = ?

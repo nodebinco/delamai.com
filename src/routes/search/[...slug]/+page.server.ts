@@ -35,7 +35,7 @@ export const load: PageServerLoad = async ({ params }) => {
   const countResult = db
     .prepare(
       `
-      SELECT COUNT(*) as total
+      SELECT COUNT(id) as total
       FROM products
       WHERE title LIKE ? OR description LIKE ?
     `
@@ -48,7 +48,7 @@ export const load: PageServerLoad = async ({ params }) => {
   const products = db
     .prepare(
       `
-      SELECT *
+      SELECT id, title, image_link, item_rating, item_sold, sale_price, product_link
       FROM products
       WHERE title LIKE ? OR description LIKE ?
       ORDER BY item_sold DESC

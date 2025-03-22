@@ -1,14 +1,14 @@
 import { error } from '@sveltejs/kit';
-import type { Load } from './$types';
+import type { ExtendedProduct, Load } from './$types';
 import type { Product, Tag } from '$lib/db';
 import { db, getCache, setCache } from '$lib/db';
+import { omit } from 'ramda';
 
 const ITEMS_PER_PAGE = 120;
 
 export const load: Load = async ({ params }) => {
   const productId = params.id;
 
-  // Check cache first
   const cacheKey = `product_${productId}`;
   const cachedData = getCache(cacheKey);
 
@@ -16,7 +16,6 @@ export const load: Load = async ({ params }) => {
     return cachedData;
   }
 
-  // Get product details with brand and category info
   const product = db
     .prepare(
       `
@@ -67,7 +66,7 @@ export const load: Load = async ({ params }) => {
       `
     WITH SameBrandProducts AS (
       SELECT 
-        p.*,
+        p.id, p.title, p.image_link, p.item_rating, p.item_sold, p.sale_price, p.product_link,
         b.id as brand_id,
         b.name as brand_name,
         0 as shared_tags,
@@ -79,7 +78,7 @@ export const load: Load = async ({ params }) => {
     ),
     SharedTagProducts AS (
       SELECT 
-        p.*,
+        p.id, p.title, p.image_link, p.item_rating, p.item_sold, p.sale_price, p.product_link,
         b.id as brand_id,
         b.name as brand_name,
         COUNT(pt2.tag_id) as shared_tags,
@@ -114,7 +113,7 @@ export const load: Load = async ({ params }) => {
       .prepare(
         `
         SELECT DISTINCT
-          p.*,
+        p.id, p.title, p.image_link, p.item_rating, p.item_sold, p.sale_price, p.product_link,
           b.id as brand_id,
           b.name as brand_name
         FROM products p
@@ -143,7 +142,15 @@ export const load: Load = async ({ params }) => {
 
   relatedProducts = Array.from(
     new Map([...relatedProducts, ...categoryProducts].map((item) => [item.id, item])).values()
-  ).slice(0, ITEMS_PER_PAGE);
+  )
+    .slice(0, ITEMS_PER_PAGE)
+    .map(
+      (item) =>
+        omit(
+          ['brand_id', 'brand_name', 'shared_tags', 'same_brand'],
+          item as ExtendedProduct
+        ) as Product
+    );
 
   const categories = [
     product.category1_th && product.global_catid1
@@ -164,7 +171,6 @@ export const load: Load = async ({ params }) => {
     categories
   };
 
-  // Cache the results
   setCache(cacheKey, data);
 
   return data;

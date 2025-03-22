@@ -33,7 +33,7 @@ export const load: Load = async ({ params }) => {
     db
       .prepare(
         `
-    SELECT COUNT(*) as count 
+    SELECT COUNT(id) as count 
     FROM products 
     WHERE global_catid1 = ? OR global_catid2 = ? OR global_catid3 = ?
   `
@@ -46,7 +46,8 @@ export const load: Load = async ({ params }) => {
   const products = db
     .prepare(
       `
-    SELECT * FROM products 
+    SELECT id, title, image_link, item_rating, item_sold, sale_price, product_link
+    FROM products 
     WHERE global_catid1 = ? OR global_catid2 = ? OR global_catid3 = ?
     ORDER BY item_sold DESC 
     LIMIT ? OFFSET ?

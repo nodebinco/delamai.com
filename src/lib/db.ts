@@ -5,8 +5,7 @@ import path from 'path';
 const __dirname = path.resolve();
 export const db = new Database(path.join(__dirname, DATABASE_URL));
 
-// Enable foreign keys
-db.pragma('foreign_keys = ON');
+db.pragma('journal_mode = WAL');
 
 // Database types
 export interface Product {
@@ -117,14 +116,14 @@ export function getCache(key: string): any | null {
     return null;
   }
 
-  const cacheDate = new Date(result.created_at);
-  const now = new Date();
-  const diffDays = (now.getTime() - cacheDate.getTime()) / (1000 * 60 * 60 * 24);
+  // const cacheDate = new Date(result.created_at);
+  // const now = new Date();
+  // const diffDays = (now.getTime() - cacheDate.getTime()) / (1000 * 60 * 60 * 24);
 
-  if (diffDays > 5) {
-    db.prepare('DELETE FROM cache WHERE key = ?').run(key);
-    return null;
-  }
+  // if (diffDays > 5) {
+  //   db.prepare('DELETE FROM cache WHERE key = ?').run(key);
+  //   return null;
+  // }
 
   try {
     return JSON.parse(result.value);

@@ -19,13 +19,12 @@ export const load: Load = async ({ params }) => {
     throw error(400, 'Invalid page number');
   }
 
-  // Check cache first
   const cacheKey = `brand_${brandId}_${page}`;
   const cachedData = getCache(cacheKey);
 
-  if (cachedData) {
-    return cachedData;
-  }
+  // if (cachedData) {
+  //   return cachedData;
+  // }
 
   const offset = (page - 1) * ITEMS_PER_PAGE;
 
@@ -36,7 +35,9 @@ export const load: Load = async ({ params }) => {
   }
 
   const totalCount = (
-    db.prepare('SELECT COUNT(*) as count FROM products WHERE global_brand = ?').get(brand.name) as {
+    db
+      .prepare('SELECT COUNT(id) as count FROM products WHERE global_brand = ?')
+      .get(brand.name) as {
       count: number;
     }
   ).count;
@@ -49,7 +50,7 @@ export const load: Load = async ({ params }) => {
   const products = db
     .prepare(
       `
-    SELECT *
+    SELECT id, title, image_link, item_rating, item_sold, sale_price, product_link
     FROM products
     WHERE global_brand = ? 
     ORDER BY item_sold DESC 
@@ -67,7 +68,6 @@ export const load: Load = async ({ params }) => {
     ITEMS_PER_PAGE
   };
 
-  // Cache the results
   setCache(cacheKey, data);
 
   return data;
