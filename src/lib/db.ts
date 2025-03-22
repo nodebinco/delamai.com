@@ -6,6 +6,8 @@ const __dirname = path.resolve();
 export const db = new Database(path.join(__dirname, DATABASE_URL));
 
 db.pragma('journal_mode = WAL');
+db.pragma('foreign_keys = ON');
+db.pragma('automatic_index = true');
 
 // Database types
 export interface Product {
@@ -62,48 +64,6 @@ export interface ProductTag {
 export interface Cache {
   key: string;
   value: string;
-}
-
-// Helper function to get brand with product count
-export function getBrandWithProductCount(brandId: string): Brand & { product_count: number } {
-  const result = db
-    .prepare(
-      `
-    SELECT b.*, COUNT(p.id) as product_count
-    FROM brands b
-    LEFT JOIN products p ON b.id = p.brand_id
-    WHERE b.id = ?
-    GROUP BY b.id
-  `
-    )
-    .get(brandId) as Brand & { product_count: number };
-
-  if (!result) {
-    throw new Error(`Brand with id ${brandId} not found`);
-  }
-
-  return result;
-}
-
-// Helper function to get tag with product count
-export function getTagWithProductCount(tagId: string): Tag & { product_count: number } {
-  const result = db
-    .prepare(
-      `
-    SELECT t.*, COUNT(pt.product_id) as product_count
-    FROM tags t
-    LEFT JOIN product_tags pt ON t.id = pt.tag_id
-    WHERE t.id = ?
-    GROUP BY t.id
-  `
-    )
-    .get(tagId) as Tag & { product_count: number };
-
-  if (!result) {
-    throw new Error(`Tag with id ${tagId} not found`);
-  }
-
-  return result;
 }
 
 // Cache helper functions

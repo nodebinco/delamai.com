@@ -107,11 +107,12 @@
   {/if}
 
   <div class="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-    <div>
+    <div class="relative aspect-square w-full">
+      <div class="absolute inset-0 animate-pulse rounded-lg bg-gray-200"></div>
       <img
         src={data.product.image_link}
         alt={data.product.title}
-        class="h-auto w-full rounded-lg shadow-xs"
+        class="absolute inset-0 h-full w-full rounded-lg object-cover shadow-xs"
       />
     </div>
     <div class="space-y-3">

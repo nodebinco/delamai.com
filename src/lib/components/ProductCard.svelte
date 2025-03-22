@@ -5,12 +5,12 @@
 
 <div class="card bg-base-100 shadow-sm transition-all duration-300 hover:shadow-md">
   <a href="/products/{product.id}" class="block">
-    <figure class="overflow-hidden rounded-t-lg">
-      <div class="aspect-square w-full animate-pulse bg-gray-200"></div>
+    <figure class="relative aspect-square w-full overflow-hidden rounded-t-lg">
+      <div class="absolute inset-0 animate-pulse bg-gray-200"></div>
       <img
         src={product.image_link}
         alt={product.title}
-        class="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
+        class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 hover:scale-110"
         loading="lazy"
       />
     </figure>

@@ -20,15 +20,6 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-  <!-- Breadcrumb -->
-  <div class="breadcrumbs mb-6 text-sm">
-    <ul>
-      <li><a href="/" class="link link-hover text-primary">หน้าหลัก</a></li>
-      <li><a href="/brand" class="link link-hover text-primary">แบรนด์</a></li>
-      <li class="text-base-content/70">{data.brand.name}</li>
-    </ul>
-  </div>
-
   <!-- Brand Header -->
   <div class="mb-8 text-center">
     <div>
