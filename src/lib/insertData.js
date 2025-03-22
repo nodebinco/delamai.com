@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3';
 import fs from 'fs';
 
-const db = new Database('src/lib/data.db');
+const db = new Database('data.db');
 
 // Read JSON files
 const sourcePath = '/home/panasun/Projects/panasun/delamai';

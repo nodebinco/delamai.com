@@ -3,7 +3,7 @@ import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
 import { writeFile } from 'fs/promises';
 
-const db = new Database('src/lib/data.db');
+const db = new Database('data.db');
 db.pragma('journal_mode = WAL');
 
 async function fetchUrl(url) {
@@ -100,6 +100,6 @@ const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then((d
   data.toString()
 );
 
-await writeFile('build/client/sitemap.xml', sitemap);
+// await writeFile('build/client/sitemap.xml', sitemap);
 
-await generateCache(links);
+// await generateCache(links);
