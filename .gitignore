@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 data.db
 data.db-shm
 data.db-wal
+insertData.js
+prepareDb.js
+deploy.sh
