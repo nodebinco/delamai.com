@@ -68,24 +68,15 @@ export interface Cache {
 
 // Cache helper functions
 export function getCache(key: string): any | null {
-  const result = db.prepare('SELECT value, created_at FROM cache WHERE key = ?').get(key) as
-    | { value: string; created_at: string }
-    | undefined;
-
-  if (!result) {
-    return null;
-  }
-
-  // const cacheDate = new Date(result.created_at);
-  // const now = new Date();
-  // const diffDays = (now.getTime() - cacheDate.getTime()) / (1000 * 60 * 60 * 24);
-
-  // if (diffDays > 5) {
-  //   db.prepare('DELETE FROM cache WHERE key = ?').run(key);
-  //   return null;
-  // }
-
   try {
+    const result = db.prepare('SELECT value, created_at FROM cache WHERE key = ?').get(key) as
+      | { value: string; created_at: string }
+      | undefined;
+
+    if (!result) {
+      return null;
+    }
+
     return JSON.parse(result.value);
   } catch {
     return null;

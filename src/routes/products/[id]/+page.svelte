@@ -324,7 +324,7 @@
         <span>ไม่พบสินค้าที่เกี่ยวข้อง</span>
       </div>
     {:else}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4 gap-2">
+      <div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
         {#each data.relatedProducts as product}
           <ProductCard {product} />
         {/each}

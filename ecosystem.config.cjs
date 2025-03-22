@@ -1,15 +1,15 @@
 module.exports = {
   apps: [
     {
-      name: "app",
-      script: "./index.js",
+      name: 'app',
+      script: './index.js',
       instances: 2,
-      exec_mode: "cluster",
+      exec_mode: 'cluster',
       env: {
         PORT: 3000,
-        NODE_ENV: "production",
+        NODE_ENV: 'production'
       },
-      node_args: "--env-file=.env"
-    },
-  ],
+      node_args: '--env-file=.env'
+    }
+  ]
 };

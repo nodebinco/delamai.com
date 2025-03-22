@@ -67,7 +67,7 @@
   <!-- Featured Products Section -->
   <section class="mb-12">
     <h2 class="mb-6 text-2xl font-bold">สินค้าขายดี</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4 gap-2">
+    <div class="grid grid-cols-2 gap-2 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
       {#each data.featuredProducts as product}
         <ProductCard {product} />
       {/each}
