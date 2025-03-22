@@ -100,6 +100,6 @@ const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then((d
   data.toString()
 );
 
-// await writeFile('build/client/sitemap.xml', sitemap);
+await writeFile('build/client/sitemap.xml', sitemap);
 
-// await generateCache(links);
+await generateCache(links);

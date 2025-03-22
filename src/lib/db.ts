@@ -3,7 +3,6 @@ import { DATABASE_URL } from '$env/static/private';
 import path from 'path';
 
 const __dirname = path.resolve();
-console.log(path.join(__dirname, DATABASE_URL));
 export const db = new Database(path.join(__dirname, DATABASE_URL));
 
 db.pragma('journal_mode = WAL');
