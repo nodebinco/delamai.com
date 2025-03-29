@@ -6,6 +6,7 @@ const __dirname = path.resolve();
 export const db = new Database(path.join(__dirname, DATABASE_URL));
 
 db.pragma('journal_mode = WAL');
+db.pragma('synchronous = ON');
 db.pragma('foreign_keys = ON');
 db.pragma('automatic_index = true');
 

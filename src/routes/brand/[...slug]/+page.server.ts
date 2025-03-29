@@ -1,9 +1,6 @@
 import { error } from '@sveltejs/kit';
 import type { Load } from './$types';
-import { db, getCache, setCache } from '$lib/db';
-import type { Brand, Product } from '$lib/db';
-
-const ITEMS_PER_PAGE = 120;
+import { loadBrand } from '$lib/loaders';
 
 export const load: Load = async ({ params }) => {
   const slugParts = params.slug.split('/');
@@ -15,60 +12,5 @@ export const load: Load = async ({ params }) => {
   const brandId = slugParts[0];
   const page = slugParts[1] ? parseInt(slugParts[1]) : 1;
 
-  if (isNaN(page) || page < 1) {
-    throw error(400, 'Invalid page number');
-  }
-
-  const cacheKey = `brand_${brandId}_${page}`;
-  const cachedData = getCache(cacheKey);
-
-  // if (cachedData) {
-  //   return cachedData;
-  // }
-
-  const offset = (page - 1) * ITEMS_PER_PAGE;
-
-  const brand = db.prepare('SELECT * FROM brands WHERE id = ?').get(brandId) as Brand | undefined;
-
-  if (!brand) {
-    throw error(404, 'Brand not found');
-  }
-
-  const totalCount = (
-    db
-      .prepare('SELECT COUNT(id) as count FROM products WHERE global_brand = ?')
-      .get(brand.name) as {
-      count: number;
-    }
-  ).count;
-  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
-
-  if (page > totalPages && totalPages > 0) {
-    throw error(404, 'Page not found');
-  }
-
-  const products = db
-    .prepare(
-      `
-    SELECT id, title, image_link, item_rating, item_sold, sale_price, product_link
-    FROM products
-    WHERE global_brand = ? 
-    ORDER BY item_sold DESC 
-    LIMIT ? OFFSET ?
-  `
-    )
-    .all(brand.name, ITEMS_PER_PAGE, offset) as Product[];
-
-  const data = {
-    brand,
-    products,
-    totalPages,
-    currentPage: page,
-    totalCount,
-    ITEMS_PER_PAGE
-  };
-
-  setCache(cacheKey, data);
-
-  return data;
+  return loadBrand(brandId, page);
 };

@@ -34,69 +34,7 @@ async function generateSitemapLinks() {
     });
   }
 
-  // const brands = db.prepare('SELECT id FROM brands').all();
-  // for (const brand of brands) {
-  //   if (brand.id == '') continue;
-  //   links.push({
-  //     url: `/brand/${brand.id}`,
-  //     changefreq: 'weekly',
-  //     priority: 0.6
-  //   });
-  // }
-
-  // const categories = db.prepare('SELECT id FROM categories').all();
-  // for (const category of categories) {
-  //   if (category.id == '') continue;
-  //   links.push({
-  //     url: `/category/${category.id}`,
-  //     changefreq: 'weekly',
-  //     priority: 0.6
-  //   });
-  // }
-
-  // const tags = db.prepare('SELECT id FROM tags').all();
-  // for (const tag of tags) {
-  //   if (tag.id == '') continue;
-  //   links.push({
-  //     url: `/tags/${tag.id}`,
-  //     changefreq: 'weekly',
-  //     priority: 0.5
-  //   });
-  // }
-
   return links;
 }
 
-async function generateCache(links) {
-  console.log('Fetching URLs to generate cache...');
-
-  const CHUNK_SIZE = 50;
-  let successCount = 0;
-  let processedCount = 0;
-
-  for (let i = 0; i < links.length; i += CHUNK_SIZE) {
-    const chunk = links.slice(i, i + CHUNK_SIZE);
-    const fetchPromises = chunk.map((link) => fetchUrl(link.url));
-    const results = await Promise.all(fetchPromises);
-    successCount += results.filter(Boolean).length;
-    processedCount += chunk.length;
-
-    console.log(`Processed ${processedCount}/${links.length} URLs (${successCount} successful)`);
-  }
-
-  console.log(
-    `Cache generation complete. Successfully fetched ${successCount} out of ${links.length} URLs`
-  );
-}
-
-const stream = new SitemapStream({ hostname: 'https://delamai.com' });
-
-const links = await generateSitemapLinks();
-
-const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
-  data.toString()
-);
-
 await writeFile('build/client/sitemap.xml', sitemap);
-
-await generateCache(links);

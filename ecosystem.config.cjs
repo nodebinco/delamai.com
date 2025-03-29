@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'app',
+      name: 'delmai',
       script: './index.js',
       instances: 2,
       exec_mode: 'cluster',
