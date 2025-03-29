@@ -34,38 +34,35 @@ async function generateSitemapLinks() {
     });
   }
 
-  // Add brand URLs
-  const brands = db.prepare('SELECT id FROM brands').all();
-  for (const brand of brands) {
-    if (brand.id == '') continue;
-    links.push({
-      url: `/brand/${brand.id}`,
-      changefreq: 'weekly',
-      priority: 0.6
-    });
-  }
+  // const brands = db.prepare('SELECT id FROM brands').all();
+  // for (const brand of brands) {
+  //   if (brand.id == '') continue;
+  //   links.push({
+  //     url: `/brand/${brand.id}`,
+  //     changefreq: 'weekly',
+  //     priority: 0.6
+  //   });
+  // }
 
-  // Add category URLs
-  const categories = db.prepare('SELECT id FROM categories').all();
-  for (const category of categories) {
-    if (category.id == '') continue;
-    links.push({
-      url: `/category/${category.id}`,
-      changefreq: 'weekly',
-      priority: 0.6
-    });
-  }
+  // const categories = db.prepare('SELECT id FROM categories').all();
+  // for (const category of categories) {
+  //   if (category.id == '') continue;
+  //   links.push({
+  //     url: `/category/${category.id}`,
+  //     changefreq: 'weekly',
+  //     priority: 0.6
+  //   });
+  // }
 
-  // Add tag URLs
-  const tags = db.prepare('SELECT id FROM tags').all();
-  for (const tag of tags) {
-    if (tag.id == '') continue;
-    links.push({
-      url: `/tags/${tag.id}`,
-      changefreq: 'weekly',
-      priority: 0.5
-    });
-  }
+  // const tags = db.prepare('SELECT id FROM tags').all();
+  // for (const tag of tags) {
+  //   if (tag.id == '') continue;
+  //   links.push({
+  //     url: `/tags/${tag.id}`,
+  //     changefreq: 'weekly',
+  //     priority: 0.5
+  //   });
+  // }
 
   return links;
 }
