@@ -6,21 +6,6 @@ import { writeFile } from 'fs/promises';
 const db = new Database('data.db');
 db.pragma('journal_mode = WAL');
 
-async function fetchUrl(url) {
-  console.log(url);
-
-  try {
-    const response = await fetch(`http://localhost:5173${url}`);
-    if (!response.ok) {
-      console.error(`Failed to fetch ${url}: ${response.status}`);
-    }
-    return response.ok;
-  } catch (error) {
-    console.error(`Error fetching ${url}:`, error);
-    return false;
-  }
-}
-
 async function generateSitemapLinks() {
   const links = [{ url: '/', changefreq: 'daily', priority: 0.3 }];
 
@@ -36,5 +21,12 @@ async function generateSitemapLinks() {
 
   return links;
 }
+const stream = new SitemapStream({ hostname: 'https://delamai.com' });
+
+const links = await generateSitemapLinks();
+
+const sitemap = await streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
+  data.toString()
+);
 
 await writeFile('build/client/sitemap.xml', sitemap);

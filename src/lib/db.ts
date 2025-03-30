@@ -5,11 +5,13 @@ import path from 'path';
 const __dirname = path.resolve();
 export const db = new Database(path.join(__dirname, DATABASE_URL));
 
+// db.pragma('cache_size = -8000000');
+// db.pragma('temp_store = MEMORY');
+// db.pragma('mmap_size = 30000000000');
+// db.pragma('synchronous = NORMAL');
 db.pragma('journal_mode = WAL');
-db.pragma('synchronous = ON');
 db.pragma('foreign_keys = ON');
 db.pragma('automatic_index = true');
-
 // Database types
 export interface Product {
   id: string;
@@ -23,8 +25,7 @@ export interface Product {
   item_rating: number;
   brand_id: string;
   global_brand: string;
-  brand_name?: string; // From JOIN with brands table
-  global_category1: string;
+  brand_name?: string;
   global_category2: string;
   global_category3: string;
   global_catid1: number;
@@ -54,9 +55,8 @@ export interface Brand {
 export interface Tag {
   id: string;
   name: string;
-  product_count?: number; // Optional count of products for this tag
+  product_count?: number;
 }
-
 export interface ProductTag {
   product_id: string;
   tag_id: string;
@@ -67,7 +67,6 @@ export interface Cache {
   value: string;
 }
 
-// Cache helper functions
 export function getCache(key: string): any | null {
   try {
     const result = db.prepare('SELECT value, created_at FROM cache WHERE key = ?').get(key) as

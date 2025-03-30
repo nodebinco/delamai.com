@@ -12,66 +12,6 @@ type ExtendedProduct = Omit<Product, 'brand_id'> & {
   same_brand?: number;
 };
 
-interface DbRecord {
-  id: string;
-}
-
-export async function generateAllCache() {
-  try {
-    console.log('Generating cache...');
-
-    // Cache products
-    const products = db.prepare('SELECT id FROM products').all() as DbRecord[];
-    console.log(`Caching ${products.length} products...`);
-    for (const product of products) {
-      try {
-        await loadProduct(product.id);
-      } catch (error) {
-        console.error(`Error caching product ${product.id}:`, error);
-      }
-    }
-
-    // Cache tags
-    const tags = db.prepare('SELECT id FROM tags').all() as DbRecord[];
-    console.log(`Caching ${tags.length} tags...`);
-    for (const tag of tags) {
-      try {
-        await loadTag(tag.id);
-      } catch (error) {
-        console.error(`Error caching tag ${tag.id}:`, error);
-      }
-    }
-
-    // Cache brands
-    const brands = db.prepare('SELECT id FROM brands').all() as DbRecord[];
-    console.log(`Caching ${brands.length} brands...`);
-    for (const brand of brands) {
-      try {
-        await loadBrand(brand.id);
-      } catch (error) {
-        console.error(`Error caching brand ${brand.id}:`, error);
-      }
-    }
-
-    // Cache categories
-    const categories = db.prepare('SELECT id FROM categories').all() as DbRecord[];
-    console.log(`Caching ${categories.length} categories...`);
-    for (const category of categories) {
-      try {
-        await loadCategory(category.id);
-      } catch (error) {
-        console.error(`Error caching category ${category.id}:`, error);
-      }
-    }
-
-    console.log('Cache generation complete.');
-    return { success: true, message: 'Cache generation complete' };
-  } catch (error) {
-    console.error('Error generating cache:', error);
-    return { success: false, message: 'Error generating cache' };
-  }
-}
-
 export const loadProduct = async (productId: string) => {
   const cacheKey = `product_${productId}`;
   const cachedData = getCache(cacheKey);
