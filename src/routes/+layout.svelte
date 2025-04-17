@@ -136,6 +136,9 @@
               เงื่อนไขการใช้บริการ
             </a>
           </li>
+          <li>
+            <a href="/blog" class="hover:text-primary text-gray-600">บทความ</a>
+          </li>
         </ul>
       </div>
     </div>
